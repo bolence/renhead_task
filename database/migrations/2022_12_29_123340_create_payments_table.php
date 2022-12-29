@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->enum('type', ['APPROVER', 'BASIC']);
-            $table->string('password');
+            $table->unsignedBigInteger('user_id')->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->decimal('total_amount', 8, 2);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('payments');
     }
 };
