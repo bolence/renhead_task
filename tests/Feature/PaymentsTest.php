@@ -12,6 +12,19 @@ class PaymentsTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $user;
+
+    protected $payment;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+
+        $this->payment = Payment::factory()->create();
+    }
+
     /**
      * A basic feature test example.
      *
@@ -55,10 +68,8 @@ class PaymentsTest extends TestCase
 
         Sanctum::actingAs(User::factory()->create());
 
-        $user = User::factory()->create();
-
         $payment = [
-            'user_id' => $user->id,
+            'user_id' => $this->user->id,
             'total_amount' => 1000
         ];
 
@@ -75,24 +86,18 @@ class PaymentsTest extends TestCase
     {
         Sanctum::actingAs(User::factory()->create());
 
-        $user = User::factory()->create();
-
-        $payment = Payment::factory()->create();
-
         $new_payment_data = [
-            'user_id' => $user->id,
+            'user_id' => $this->user->id,
             'total_amount' => 1000
         ];
 
-        $this->json('PUT', "/api/payments/{$payment->id}", $new_payment_data)->assertStatus(200);
+        $this->json('PUT', "/api/payments/{$this->payment->id}", $new_payment_data)->assertStatus(200);
     }
 
     public function test_user_can_delete_a_payment()
     {
         Sanctum::actingAs(User::factory()->create());
 
-        $payment = Payment::factory()->create();
-
-        $this->json('DELETE', "/api/payments/{$payment->id}")->assertStatus(200);
+        $this->json('DELETE', "/api/payments/{$this->payment->id}")->assertStatus(200);
     }
 }
