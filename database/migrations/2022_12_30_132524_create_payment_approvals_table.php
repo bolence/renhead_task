@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
-            $table->smallInteger('id', true, true);
+        Schema::create('payment_approvals', function (Blueprint $table) {
+            $table->smallInteger('id', false, true);
             $table->unsignedSmallInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->decimal('total_amount', 8, 2);
+            $table->smallInteger('payment_id')->index();
+            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
+            $table->string('payment_type');
+            $table->enum('status', ['APPROVED', 'DISAPPROVED']);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('payment_approvals');
     }
 };

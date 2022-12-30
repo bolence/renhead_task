@@ -12,15 +12,11 @@ class PaymentsTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
-
     protected $payment;
 
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->user = User::factory()->create();
 
         $this->payment = Payment::factory()->create();
     }
@@ -66,10 +62,10 @@ class PaymentsTest extends TestCase
     public function test_user_can_create_a_new_payment()
     {
 
-        Sanctum::actingAs(User::factory()->create());
+        $user = Sanctum::actingAs(User::factory()->create());
 
         $payment = [
-            'user_id' => $this->user->id,
+            'user_id' => $user->id,
             'total_amount' => 1000
         ];
 
@@ -84,10 +80,10 @@ class PaymentsTest extends TestCase
      */
     public function test_user_can_update_a_payment()
     {
-        Sanctum::actingAs(User::factory()->create());
+        $user = Sanctum::actingAs(User::factory()->create());
 
         $new_payment_data = [
-            'user_id' => $this->user->id,
+            'user_id' => $user->id,
             'total_amount' => 1000
         ];
 

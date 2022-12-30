@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\{
     Payment,
+    PaymentApproval,
     User
 };
 use Illuminate\Database\Seeder;
@@ -20,9 +21,9 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory(2)->create();
-        collect(User::class)->each(function($user){
-            Payment::factory(200)->create($user);
-        });
+        Payment::factory(400)->create();
+        PaymentApproval::factory(200)->create();
+
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

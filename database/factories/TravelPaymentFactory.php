@@ -6,9 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TravelPayment>
  */
-class PaymentFactory extends Factory
+class TravelPaymentFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,10 +17,9 @@ class PaymentFactory extends Factory
      */
     public function definition()
     {
-
         return [
             'user_id' => User::all()->random(),
-            'total_amount' => fake()->numberBetween(1000, 9999)
+            'amount' => fake()->randomNumber([1000, 9999])
         ];
     }
 }

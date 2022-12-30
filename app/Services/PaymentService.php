@@ -2,7 +2,7 @@
 
 use App\Models\Payment;
 
-class PaymentService {
+class PaymentService extends GlobalService {
 
     /**
      * Undocumented function
@@ -29,7 +29,7 @@ class PaymentService {
         } catch (\Throwable $th) {
             info('Error during saving a new payment ' . $th->getMessage() . ' ' . $th->getLine() . ' ' . $th->getCode());
             return response()->json([
-                'message' => 'Unable to save new payment'
+                'message' => 'Unable to save a new payment'
             ], 400);
         }
 

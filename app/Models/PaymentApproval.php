@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class PaymentApproval extends Model
 {
     use HasFactory;
+
 
     /**
      * The attributes that aren't mass assignable.
@@ -15,6 +16,7 @@ class Payment extends Model
      * @var array
      */
     protected $guarded = ['id'];
+
 
     /**
      * The attributes that should be mutated to dates.
@@ -24,13 +26,13 @@ class Payment extends Model
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
 
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function approved_payments()
-    {
-        return $this->hasMany(PaymentApproval::class);
     }
 }

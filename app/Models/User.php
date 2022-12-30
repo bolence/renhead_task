@@ -42,4 +42,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function travel_payments()
+    {
+        return $this->hasMany(TravelPayment::class);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }
