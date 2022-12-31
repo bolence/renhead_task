@@ -14,14 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('travel_payments', function (Blueprint $table) {
-            $table->smallInteger('id', false, true);
+            $table->smallInteger('id', false, true)->index();
             $table->unsignedSmallInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('id')->references('id')->on('payment_approvals');
+            $table->foreign('id')->references('payment_id')->on('payment_approvals');
             $table->decimal('amount', 8, 2);
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 
