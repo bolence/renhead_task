@@ -10,6 +10,7 @@ use App\Models\{
     User
 };
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,8 +21,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
+        User::truncate();
+        Payment::truncate();
+        PaymentApproval::truncate();
         User::factory(2)->create();
         Payment::factory(500)->create();
         PaymentApproval::factory(200)->create();
+        Schema::enableForeignKeyConstraints();
     }
 }
