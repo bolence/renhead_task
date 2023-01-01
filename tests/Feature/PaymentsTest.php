@@ -17,8 +17,9 @@ class PaymentsTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
+        User::factory(3)->create();
         $this->payment = Payment::factory()->create();
+
     }
 
     /**
@@ -94,6 +95,8 @@ class PaymentsTest extends TestCase
     {
         Sanctum::actingAs(User::factory()->create());
 
-        $this->json('DELETE', "/api/payments/{$this->payment->id}")->assertStatus(200);
+        $payment = Payment::first();
+
+        $this->json('DELETE', "/api/payments/{$payment->id}")->assertStatus(200);
     }
 }

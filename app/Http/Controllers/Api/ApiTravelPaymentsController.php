@@ -13,7 +13,7 @@ class ApiTravelPaymentsController extends Controller
     protected TravelPaymentService $travelPayment;
 
     /**
-     * Undocumented function
+     * Class constructor
      *
      * @param TravelPaymentService $travelPayment
      */
@@ -22,7 +22,7 @@ class ApiTravelPaymentsController extends Controller
         $this->travelPayment = $travelPayment;
     }
     /**
-     * Display a listing of the resource.
+     * Show all travel payments
      *
      * @return \Illuminate\Http\Response
      */
@@ -32,7 +32,7 @@ class ApiTravelPaymentsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store new travel payment
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -43,7 +43,7 @@ class ApiTravelPaymentsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show travel payment with specific id
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -54,7 +54,7 @@ class ApiTravelPaymentsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update travel payment
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -66,7 +66,7 @@ class ApiTravelPaymentsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete travel payment
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

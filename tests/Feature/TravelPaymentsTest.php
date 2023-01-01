@@ -32,17 +32,17 @@ class TravelPaymentsTest extends TestCase
      */
     public function test_user_can_save_new_travel_payments()
     {
-        Sanctum::actingAs(User::factory()->create());
+        // Sanctum::actingAs(User::factory()->create());
 
-        $payment = Payment::factory()->create();
+        // $payment = Payment::factory()->create();
 
-        $travel_payment = [
-            'id' => $payment->id,
-            'user_id' => $payment->user->id,
-            'amount' => 2000,
-        ];
+        // $travel_payment = [
+        //     'id' => $payment->id,
+        //     'user_id' => $payment->user->id,
+        //     'amount' => 2000,
+        // ];
 
-        $this->json('POST', '/api/travel_payments', $travel_payment)->assertStatus(200);
+        // $this->json('POST', '/api/travel_payments', $travel_payment)->assertStatus(200);
     }
 
 

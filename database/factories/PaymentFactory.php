@@ -19,7 +19,7 @@ class PaymentFactory extends Factory
     {
 
         return [
-            'user_id' => User::all()->random(),
+            'user_id' => User::pluck('id')->random(),
             'total_amount' => fake()->numberBetween(1000, 9999)
         ];
     }

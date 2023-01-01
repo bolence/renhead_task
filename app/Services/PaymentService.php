@@ -5,58 +5,51 @@ use App\Models\Payment;
 class PaymentService extends GlobalService {
 
     /**
-     * Undocumented function
+     * Get all payments
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function getAllPayments()
     {
-        return response()->json([
-            'payments' => Payment::all()
-        ], 200);
+        return $this->success_response(null, ['payments' => Payment::all()]);
     }
 
     /**
-     * Undocumented function
+     * Save new payment
      *
      * @param array $request
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function savePayment(array $request)
     {
+
         try {
             $payment = Payment::create($request);
         } catch (\Throwable $th) {
-            info('Error during saving a new payment ' . $th->getMessage() . ' ' . $th->getLine() . ' ' . $th->getCode());
-            return response()->json([
-                'message' => 'Unable to save a new payment'
-            ], 400);
+            return $this->unsuccessful_reponse('Error during saving a new payment', $th);
         }
 
-        return response()->json([
-            'message' => 'Successfully created a new payment',
-            'payment' => $payment
-        ], 200);
+        return $this->success_response('Successfully created a new payment', ['payment' => $payment]);
 
     }
 
     /**
-     * Undocumented function
+     * Show single payment
      *
      * @param integer $id
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function showPayment(int $id)
     {
-        return response()->json(['payment' => Payment::findOrFail($id)]);
+        return $this->success_response(null, ['payment' =>  Payment::findOrFail($id)]);
     }
 
     /**
-     * Undocumented function
+     * Update payment
      *
      * @param array $request
      * @param integer $id
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function updatePayment(array $request, int $id)
     {
@@ -66,40 +59,30 @@ class PaymentService extends GlobalService {
         try {
             $payment->update($request);
         } catch (\Throwable $th) {
-            info('Error during updating a payment ' . $th->getMessage() . ' ' . $th->getLine() . ' ' . $th->getCode());
-            return response()->json([
-                'message' => 'Unable to update a payment'
-            ], 400);
+            return $this->unsuccessful_reponse('Unable to update a payment', $th);
         }
 
-        return response()->json([
-            'message' => 'Successfully updated a payment',
-            'payment' => $payment
-        ], 200);
+        return $this->success_response('Successfully updated a payment', ['payment' => $payment]);
     }
 
     /**
-     * Undocumented function
+     * Delete payment
      *
      * @param integer $id
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function deletePayment(int $id)
     {
         $payment = Payment::findOrFail($id);
+        $cloned_payment = $payment->replicate();
 
         try {
             $payment->delete();
         } catch (\Throwable $th) {
-            info('Error during deleting a payment ' . $th->getMessage() . ' ' . $th->getLine() . ' ' . $th->getCode());
-            return response()->json([
-                'message' => 'Unable to delete a payment'
-            ], 400);
+            return $this->unsuccessful_reponse('Error during deleting a payment', $th);
         }
 
-        return response()->json([
-            'message' => 'Successfully deleted a payment'
-        ], 200);
+        return $this->success_response('Successfully deleted a payment', ['payment' => $cloned_payment]);
     }
 
 }
