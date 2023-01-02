@@ -1,8 +1,11 @@
-<?php namespace App\Services;
+<?php
+
+namespace App\Services;
 
 use App\Models\Payment;
 
-class PaymentService extends GlobalService {
+class PaymentService extends GlobalService
+{
 
     /**
      * Get all payments
@@ -26,11 +29,10 @@ class PaymentService extends GlobalService {
         try {
             $payment = Payment::create($request);
         } catch (\Throwable $th) {
-            return $this->unsuccessful_reponse('Error during saving a new payment', $th);
+            return $this->unsuccessful_response('Error during saving a new payment', $th);
         }
 
         return $this->success_response('Successfully created a new payment', ['payment' => $payment]);
-
     }
 
     /**
@@ -59,7 +61,7 @@ class PaymentService extends GlobalService {
         try {
             $payment->update($request);
         } catch (\Throwable $th) {
-            return $this->unsuccessful_reponse('Unable to update a payment', $th);
+            return $this->unsuccessful_response('Unable to update a payment', $th);
         }
 
         return $this->success_response('Successfully updated a payment', ['payment' => $payment]);
@@ -79,10 +81,9 @@ class PaymentService extends GlobalService {
         try {
             $payment->delete();
         } catch (\Throwable $th) {
-            return $this->unsuccessful_reponse('Error during deleting a payment', $th);
+            return $this->unsuccessful_response('Error during deleting a payment', $th);
         }
 
         return $this->success_response('Successfully deleted a payment', ['payment' => $cloned_payment]);
     }
-
 }

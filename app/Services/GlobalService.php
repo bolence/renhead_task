@@ -1,7 +1,10 @@
-<?php namespace App\Services;
+<?php
+
+namespace App\Services;
 
 
-class GlobalService {
+class GlobalService
+{
 
     /**
      * Log exception in laravel daily log file
@@ -9,9 +12,11 @@ class GlobalService {
      * @param Throwable $exception
      * @return void
      */
-    public function log($exception, $message)
+    public function log($exception = null, $message)
     {
-        info($message . $exception->getCode() . ' on line ' . $exception->getLine() . ' with message ' . $exception->getMessage());
+        if ($exception) {
+            info($message . $exception->getCode() . ' on line ' . $exception->getLine() . ' with message ' . $exception->getMessage());
+        }
     }
 
     /**
@@ -34,7 +39,7 @@ class GlobalService {
      * @param Throwable $exception
      * @return \Illuminate\Http\Response
      */
-    public function unsuccessful_reponse($message, $exception)
+    public function unsuccessful_response($message, $exception = null)
     {
         $this->log($exception, $message);
 
@@ -42,5 +47,4 @@ class GlobalService {
             'message' => $message
         ], 400);
     }
-
 }

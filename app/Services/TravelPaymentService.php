@@ -1,8 +1,11 @@
-<?php namespace App\Services;
+<?php
+
+namespace App\Services;
 
 use App\Models\TravelPayment;
 
-class TravelPaymentService extends GlobalService {
+class TravelPaymentService extends GlobalService
+{
 
     /**
      * Get all travel payments
@@ -28,7 +31,7 @@ class TravelPaymentService extends GlobalService {
         try {
             $travel_payment = TravelPayment::create($request);
         } catch (\Throwable $th) {
-            return $this->unsuccessful_reponse('Error during saving a travel payments', $th);
+            return $this->unsuccessful_response('Error during saving a travel payments', $th);
         }
 
         return $this->success_response('Successfully saved a new travel payment', ['travel_payment' => $travel_payment]);
@@ -59,7 +62,7 @@ class TravelPaymentService extends GlobalService {
         try {
             $travel_payment->update($request);
         } catch (\Throwable $th) {
-            return $this->unsuccessful_reponse('Error during updating a travel payments', $th);
+            return $this->unsuccessful_response('Error during updating a travel payments', $th);
         }
 
         return $this->success_response('Successfully updated a travel payments', ['travel_payment' => $travel_payment]);
@@ -80,10 +83,9 @@ class TravelPaymentService extends GlobalService {
         try {
             $travel_payment->delete();
         } catch (\Throwable $th) {
-            return $this->unsuccessful_reponse('Error during updating a travel payments', $th);
+            return $this->unsuccessful_response('Error during updating a travel payments', $th);
         }
 
         return $this->success_response('Successfully delete a travel payment', ['travel_payment' => $travel_payment_clone]);
     }
-
 }
