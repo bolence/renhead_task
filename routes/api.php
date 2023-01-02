@@ -8,7 +8,6 @@ use App\Http\Controllers\Api\{
 };
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::resource('payments', ApiPaymentsController::class);

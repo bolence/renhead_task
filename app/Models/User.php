@@ -33,18 +33,9 @@ class User extends Authenticatable
         'password'
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
 
     /**
-     * Undocumented function
+     * Has many relationship with travel payments table
      *
      * @return void
      */
@@ -54,7 +45,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Undocumented function
+     * Has many relationship with payments table
      *
      * @return void
      */
@@ -63,6 +54,11 @@ class User extends Authenticatable
         return $this->hasMany(Payment::class);
     }
 
+    /**
+     * Check if user has type = APPROVER
+     *
+     * @return boolean
+     */
     public function scopeApprover()
     {
         return $this->type == 'APPROVER';
