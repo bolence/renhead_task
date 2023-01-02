@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PaymentApprovalRequest;
-use App\Models\PaymentApproval;
 use App\Services\PaymentApprovalService;
-use Illuminate\Http\Request;
+
 
 class ApiPaymentApprovalController extends Controller
 {
@@ -14,7 +13,7 @@ class ApiPaymentApprovalController extends Controller
     protected PaymentApprovalService $payment_approval;
 
     /**
-     * Undocumented function
+     * Class constructor
      *
      * @param PaymentApprovalService $payment_approval
      */

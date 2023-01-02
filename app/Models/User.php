@@ -34,6 +34,9 @@ class User extends Authenticatable
     ];
 
 
+    protected $appends = ['full_name'];
+
+
     /**
      * Has many relationship with travel payments table
      *
@@ -62,5 +65,17 @@ class User extends Authenticatable
     public function scopeApprover()
     {
         return $this->type == 'APPROVER';
+    }
+
+
+    public function scopeApprovers()
+    {
+        return $this->whereType('APPROVER')->get();
+    }
+
+
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
     }
 }

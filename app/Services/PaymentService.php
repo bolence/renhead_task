@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use App\Models\Payment;
+use Illuminate\Support\Facades\DB;
 
 class PaymentService extends GlobalService
 {
@@ -85,5 +87,35 @@ class PaymentService extends GlobalService
         }
 
         return $this->success_response('Successfully deleted a payment', ['payment' => $cloned_payment]);
+    }
+
+
+    /**
+     * Get sum of approved payments per user who is approver
+     *
+     * @return array
+     */
+    public static function sumOfApprovedPaymentsPerUser()
+    {
+        $approved_payments_sum = [];
+
+        $sum_of_approved_payments = DB::table('payments as p')
+            ->selectRaw('p.total_amount, pa.user_id')
+            ->join('payment_approvals as pa', 'p.id', '=', 'pa.payment_id')
+            ->join('users as u', 'pa.user_id', '=', 'u.id')
+            ->where('u.type', 'APPROVER')
+            ->where('pa.status', 'APPROVED')
+            ->groupBy('p.id')
+            ->havingRaw('count(status) = (SELECT count(id) from users where type = "APPROVER")')
+            ->sum('total_amount');
+
+        foreach (User::approvers() as $approver) {
+            $approved_payments_sum[] = [
+                'name' => $approver->full_name,
+                'sum_of_approved_payments' => (int) $sum_of_approved_payments
+            ];
+        }
+
+        return $approved_payments_sum;
     }
 }

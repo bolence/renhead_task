@@ -33,4 +33,9 @@ class Payment extends Model
     {
         return $this->hasMany(PaymentApproval::class);
     }
+
+
+    public function sum_of_approved_payments()
+    {
+    }
 }
