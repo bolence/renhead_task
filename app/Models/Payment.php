@@ -34,8 +34,8 @@ class Payment extends Model
         return $this->hasMany(PaymentApproval::class);
     }
 
-
-    public function sum_of_approved_payments()
+    public function travel_payments()
     {
+        return $this->belongsTo(TravelPayment::class);
     }
 }

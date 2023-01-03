@@ -99,20 +99,29 @@ class PaymentService extends GlobalService
     {
         $approved_payments_sum = [];
 
-        $sum_of_approved_payments = DB::table('payments as p')
-            ->selectRaw('p.total_amount, pa.user_id')
+        $sum_of_approved_payments_query = DB::table('payments as p')
+            ->selectRaw('p.total_amount, pa.user_id, p.id as payment_id')
             ->join('payment_approvals as pa', 'p.id', '=', 'pa.payment_id')
             ->join('users as u', 'pa.user_id', '=', 'u.id')
             ->where('u.type', 'APPROVER')
             ->where('pa.status', 'APPROVED')
             ->groupBy('p.id')
             ->havingRaw('count(status) = (SELECT count(id) from users where type = "APPROVER")')
-            ->sum('total_amount');
+            ->get();
+
+        $collection = collect($sum_of_approved_payments_query);
+
+        $sum_of_approved_payments = $collection->sum('total_amount');
+
+        $payments_id = $collection->pluck('payment_id');
+
+        $payments = Payment::with('travel_payments')->whereIn('id', $payments_id)->get();
 
         foreach (User::approvers() as $approver) {
             $approved_payments_sum[] = [
                 'name' => $approver->full_name,
-                'sum_of_approved_payments' => (int) $sum_of_approved_payments
+                'sum_of_approved_payments' => (int) $sum_of_approved_payments,
+                'payments' => $payments,
             ];
         }
 
