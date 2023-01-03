@@ -28,11 +28,10 @@ class ApprovedPaymentService
             ->havingRaw('COUNT(status) = (SELECT count(id) FROM users WHERE type = "APPROVER")')
             ->get();
 
-        $collection = collect($sum_of_approved_payments_query);
 
-        $sum_of_approved_payments = $collection->sum('total_amount');
+        $sum_of_approved_payments = $sum_of_approved_payments_query->sum('total_amount');
 
-        $payments_id = $collection->pluck('payment_id');
+        $payments_id = $sum_of_approved_payments_query->pluck('payment_id');
 
         $payments = Payment::with('travel_payments')->whereIn('id', $payments_id)->get();
 
