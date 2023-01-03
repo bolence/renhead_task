@@ -2,7 +2,6 @@
 
 ## RENHEAD PHP developer task
 
-<hr/>
 <br/>
 
 Task was to write an API (using Laravel framework) based on a given database model:
@@ -21,8 +20,6 @@ Following things needs to be implemented:
     - Payment is approved when all approver votes are ‘APPROVED’.
     - Consider a minimum of 200 payments per user.
 
-<br/>
-<hr/>
 <br/>
 
 ## Process
@@ -43,8 +40,6 @@ Class responsible for this logic is _ApiPaymentApprovalController_
 
 Logic for this occuring in class _ApiReportsApproverPaymentsController_
 
-<br/>
-<hr/>
 <br/>
 
 ## Steps
@@ -76,5 +71,3 @@ php artisan db:seed
 #### _This command will create 500 payments (at least 200 payments per user), create also two users randomly with type = 'APPROVER|BASIC'_.
 
 _This command will also first truncate all data from tables_.
-
-<hr/>
