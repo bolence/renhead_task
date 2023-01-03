@@ -1,4 +1,9 @@
+<br/>
+
 ## RENHEAD PHP developer task
+
+<hr/>
+<br/>
 
 Task was to write an API (using Laravel framework) based on a given database model:
 
@@ -10,10 +15,15 @@ Following things needs to be implemented:
 2. Make CRUD API for payments and travel payments.
 3. Make API route for payments approval.
 4. Make an API report that will return the sum of approved payments for every approver.
+
     - The user is an approver if he has the ‘APPROVER’ type.
     - Travel payments and payments should be on this API route.
     - Payment is approved when all approver votes are ‘APPROVED’.
     - Consider a minimum of 200 payments per user.
+
+<br/>
+<hr/>
+<br/>
 
 ## Process
 
@@ -33,7 +43,23 @@ Class responsible for this logic is _ApiPaymentApprovalController_
 
 Logic for this occuring in class _ApiReportsApproverPaymentsController_
 
+<br/>
+<hr/>
+<br/>
+
 ## Steps
+
+Run composer install
+
+```properties
+composer install
+```
+
+Copy example of .env file
+
+```properties
+cp .env.example .env
+```
 
 Run migrations to create a database tables:
 
@@ -47,4 +73,8 @@ After that you can run seeders if you want to populate created tables:
 php artisan db:seed
 ```
 
-This command first will truncate all data insert before repeated command.
+#### _This command will create 500 payments (at least 200 payments per user), create also two users randomly with type = 'APPROVER|BASIC'_.
+
+_This command will also first truncate all data from tables_.
+
+<hr/>

@@ -2,22 +2,24 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\User;
+use Laravel\Sanctum\Sanctum;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ReportApprovedPaymentsTest extends TestCase
 {
 
     use RefreshDatabase;
+
     /**
-     * A basic feature test example.
+     * Test report of approved payments
      *
      * @return void
      */
-    public function test_example()
+    public function test_report_for_approved_payments_per_user()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        Sanctum::actingAs(User::factory()->create());
+        $this->json('GET', '/api/approved_payments/reports')->assertStatus(200);
     }
 }
