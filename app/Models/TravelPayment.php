@@ -35,4 +35,10 @@ class TravelPayment extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
+    public function payments_approved()
+    {
+        return $this->morphMany(TravelPayment::class, 'payment');
+    }
 }

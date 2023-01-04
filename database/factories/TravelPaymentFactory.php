@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,8 +19,10 @@ class TravelPaymentFactory extends Factory
     public function definition()
     {
         return [
+            'id' => Payment::all()->random(),
             'user_id' => User::all()->random(),
-            'amount' => fake()->randomNumber([1000, 9999])
+            'amount' => fake()->randomNumber([1000, 9999]),
+            'created_at' => now(),
         ];
     }
 }

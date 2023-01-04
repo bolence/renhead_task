@@ -29,13 +29,8 @@ class Payment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function approved_payments()
+    public function payments_approved()
     {
-        return $this->hasMany(PaymentApproval::class);
-    }
-
-    public function travel_payments()
-    {
-        return $this->belongsTo(TravelPayment::class);
+        return $this->morphMany(TravelPayment::class, 'payment');
     }
 }

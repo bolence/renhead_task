@@ -30,6 +30,6 @@ class ApiPaymentApprovalController extends Controller
      */
     public function store(PaymentApprovalRequest $request)
     {
-        return $this->payment_approval->approve($request);
+        return $this->payment_approval->approve($request->validated());
     }
 }

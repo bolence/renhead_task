@@ -17,9 +17,7 @@ return new class extends Migration
             $table->smallInteger('id', true, true);
             $table->unsignedSmallInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedSmallInteger('payment_id')->index();
-            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
-            $table->string('payment_type');
+            $table->morphs('payment');
             $table->enum('status', ['APPROVED', 'DISAPPROVED']);
             $table->timestamps();
             $table->softDeletes();

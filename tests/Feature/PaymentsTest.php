@@ -22,7 +22,7 @@ class PaymentsTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * Test if user can see a payments
      *
      * @return void
      */
@@ -45,17 +45,28 @@ class PaymentsTest extends TestCase
     }
 
     /**
-     * Undocumented function
+     * Test if user cant see a payments
      *
      * @return void
      */
     public function test_user_cant_see_payments()
     {
-        $this->json('GET', '/api/payments')->assertStatus(401);
+        $this->getJson('/api/payments')->assertStatus(401);
     }
 
     /**
-     * Undocumented function
+     * Test if user can see specific payment
+     *
+     * @return void
+     */
+    public function test_user_can_see_specific_payment()
+    {
+        Sanctum::actingAs(User::factory()->create());
+        $this->getJson("/api/payments/{$this->payment->id}")->assertStatus(200);
+    }
+
+    /**
+     * Test if user can create a new payment
      *
      * @return void
      */
@@ -69,11 +80,11 @@ class PaymentsTest extends TestCase
             'total_amount' => 1000
         ];
 
-        $this->json('POST', '/api/payments', $payment)->assertStatus(200);
+        $this->postJson('/api/payments', $payment)->assertStatus(200);
     }
 
     /**
-     * Undocumented function
+     * Test if user can update a payment
      *
      * @return void
      */
@@ -86,15 +97,20 @@ class PaymentsTest extends TestCase
             'total_amount' => 1000
         ];
 
-        $this->json('PUT', "/api/payments/{$this->payment->id}", $new_payment_data)->assertStatus(200);
+        $this->putJson("/api/payments/{$this->payment->id}", $new_payment_data)->assertStatus(200);
     }
 
-    // public function test_user_can_delete_a_payment()
-    // {
-    //     Sanctum::actingAs(User::factory()->create());
+    /**
+     * Test if user can delete a payment
+     *
+     * @return void
+     */
+    public function test_user_can_delete_a_payment()
+    {
+        Sanctum::actingAs(User::factory()->create());
 
-    //     $payment = Payment::first();
+        $payment = Payment::first();
 
-    //     $this->json('DELETE', "/api/payments/{$payment->id}")->assertStatus(200);
-    // }
+        $this->deleteJson("/api/payments/{$payment->id}")->assertStatus(200);
+    }
 }

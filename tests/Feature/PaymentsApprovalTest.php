@@ -12,6 +12,14 @@ class PaymentsApprovalTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $payment;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->payment = Payment::factory()->create();
+    }
+
     /**
      * Test if user who is approver can approve a payment
      *
@@ -23,16 +31,13 @@ class PaymentsApprovalTest extends TestCase
             'type' => 'APPROVER'
         ]));
 
-        $payment = Payment::factory()->create();
-
         $approval = [
-            'payment_id' => $payment->id,
+            'payment_id' => $this->payment->id,
             'user_id' => $user->id,
-            'payment_type' => 'credit',
             'status' => 'APPROVED'
         ];
 
-        $this->json('POST', '/api/payments_approval', $approval)->assertStatus(200);
+        $this->postJson('/api/payments_approval', $approval)->assertStatus(200)->dump();
     }
 
     /**
@@ -46,12 +51,9 @@ class PaymentsApprovalTest extends TestCase
             'type' => 'BASIC'
         ]));
 
-        $payment = Payment::factory()->create();
-
         $approval = [
-            'payment_id' => $payment->id,
+            'payment_id' => $this->payment->id,
             'user_id' => $user->id,
-            'payment_type' => 'credit',
             'status' => 'APPROVED'
         ];
 
