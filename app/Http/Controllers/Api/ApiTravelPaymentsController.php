@@ -73,6 +73,6 @@ class ApiTravelPaymentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $this->travelPayment->deleteTravelPayment($id);
     }
 }
