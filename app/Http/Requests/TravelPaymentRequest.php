@@ -24,7 +24,6 @@ class TravelPaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required',
             'user_id' => 'required',
             'amount' => 'required|integer'
         ];
@@ -33,7 +32,6 @@ class TravelPaymentRequest extends FormRequest
     public function messages()
     {
         return [
-            'id.required' => 'Payment id is missing',
             'user_id.required' => 'Missing user_id',
             'amount.required' => 'Amount is required field',
             'amount.integer' => 'Amount needs to be integer',

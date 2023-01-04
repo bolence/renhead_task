@@ -7,10 +7,12 @@ namespace Database\Seeders;
 use App\Models\{
     Payment,
     PaymentApproval,
+    TravelPayment,
     User
 };
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -31,7 +33,16 @@ class DatabaseSeeder extends Seeder
             $user->payments()->saveMany($payments);
         });
 
-        PaymentApproval::factory(200)->create();
+        PaymentApproval::factory()->count(3)->for(
+            Payment::factory(),
+            'payment'
+        )->create();
+
+        PaymentApproval::factory()->count(3)->for(
+            TravelPayment::factory(),
+            'payment'
+        )->create();
+
         Schema::enableForeignKeyConstraints();
     }
 }

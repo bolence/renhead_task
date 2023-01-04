@@ -6,6 +6,8 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Payment;
 use Laravel\Sanctum\Sanctum;
+use App\Models\TravelPayment;
+use App\Models\PaymentApproval;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PaymentsApprovalTest extends TestCase
@@ -17,6 +19,7 @@ class PaymentsApprovalTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        User::factory()->create();
         $this->payment = Payment::factory()->create();
     }
 
@@ -31,13 +34,14 @@ class PaymentsApprovalTest extends TestCase
             'type' => 'APPROVER'
         ]));
 
-        $approval = [
-            'payment_id' => $this->payment->id,
-            'user_id' => $user->id,
-            'status' => 'APPROVED'
-        ];
+        $payment_approval = PaymentApproval::factory()->create([
+            "payment_id" => $this->payment->id,
+            "user_id" => $user->id,
+            "status" => "APPROVED",
+            "payment_type" => "App\Models\Payment",
+        ]);
 
-        $this->postJson('/api/payments_approval', $approval)->assertStatus(200)->dump();
+        $this->postJson('/api/payments_approval', $payment_approval->toArray())->assertStatus(200);
     }
 
     /**
@@ -51,12 +55,15 @@ class PaymentsApprovalTest extends TestCase
             'type' => 'BASIC'
         ]));
 
-        $approval = [
-            'payment_id' => $this->payment->id,
-            'user_id' => $user->id,
-            'status' => 'APPROVED'
-        ];
+        $travel_payment = TravelPayment::factory()->create();
 
-        $this->json('POST', '/api/payments_approval', $approval)->assertStatus(400);
+        $payment_approval = PaymentApproval::factory()->create([
+            "payment_id" => $travel_payment->id,
+            "user_id" => $user->id,
+            "status" => "APPROVED",
+            "payment_type" => "App\Models\TravelPayment",
+        ]);
+
+        $this->json('POST', '/api/payments_approval', $payment_approval->toArray())->assertStatus(400);
     }
 }

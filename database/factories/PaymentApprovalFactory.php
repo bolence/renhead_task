@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Payment;
+use App\Models\PaymentApproval;
+use App\Models\TravelPayment;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -11,6 +13,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PaymentApprovalFactory extends Factory
 {
+
+    protected $model = PaymentApproval::class;
+
     /**
      * Define the model's default state.
      *
@@ -18,12 +23,23 @@ class PaymentApprovalFactory extends Factory
      */
     public function definition()
     {
+        $payment = $this->payment();
+
         return [
             'user_id' => User::all()->random(),
-            'payment_id' => Payment::all()->random(),
-            'payment_type' => 'bank',
+            'payment_id' => $payment::factory(),
+            'payment_type' => $payment,
             'status' => fake()->randomElement(['APPROVED', 'DISAPPROVED']),
             'created_at' => now()
         ];
+    }
+
+
+    public function payment()
+    {
+        return fake()->randomElement([
+            Payment::class,
+            TravelPayment::class,
+        ]);
     }
 }

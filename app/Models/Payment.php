@@ -31,6 +31,6 @@ class Payment extends Model
 
     public function payments_approved()
     {
-        return $this->morphMany(TravelPayment::class, 'payment');
+        return $this->morphMany(PaymentApproval::class, 'payment');
     }
 }

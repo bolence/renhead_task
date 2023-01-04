@@ -15,7 +15,7 @@ class TravelPayment extends Model
      *
      * @var array
      */
-    protected $fillable = ['id', 'user_id', 'amount'];
+    protected $guarded = ['id'];
 
 
     /**
@@ -39,6 +39,6 @@ class TravelPayment extends Model
 
     public function payments_approved()
     {
-        return $this->morphMany(TravelPayment::class, 'payment');
+        return $this->morphMany(PaymentApproval::class, 'payment');
     }
 }

@@ -21,7 +21,8 @@ class UserFactory extends Factory
             'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
             'password' => bcrypt('bosko'),
-            'type' => fake()->randomElement(['APPROVER', 'BASIC'])
+            'type' => fake()->randomElement(['APPROVER', 'BASIC']),
+            'created_at' => now()
         ];
     }
 }

@@ -19,7 +19,6 @@ class TravelPaymentsTest extends TestCase
     {
         parent::setUp();
         Sanctum::actingAs(User::factory()->create());
-        Payment::factory()->create();
         $this->travel_payment = TravelPayment::factory()->create();
     }
 
