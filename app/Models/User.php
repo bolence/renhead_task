@@ -57,6 +57,11 @@ class User extends Authenticatable
         return $this->hasMany(Payment::class);
     }
 
+    public function approved_payments()
+    {
+        return $this->hasMany(PaymentApproval::class);
+    }
+
     /**
      * Check if user has type = APPROVER
      *

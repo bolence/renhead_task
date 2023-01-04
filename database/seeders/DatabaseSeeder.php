@@ -33,6 +33,10 @@ class DatabaseSeeder extends Seeder
             $user->payments()->saveMany($payments);
         });
 
+        // TravelPayment::factory(200)->create();
+
+        // PaymentApproval::factory(200)->create();
+
         PaymentApproval::factory()->count(3)->for(
             Payment::factory(),
             'payment'

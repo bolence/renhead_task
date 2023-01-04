@@ -33,7 +33,7 @@ class ApprovedPaymentService
 
         $payments_id = $sum_of_approved_payments_query->pluck('payment_id');
 
-        $payments = Payment::with('travel_payments')->whereIn('id', $payments_id)->get();
+        $payments = Payment::findOrFail($payments_id[0]);
 
         foreach (User::approvers() as $approver) {
             $approved_payments_sum[] = [
