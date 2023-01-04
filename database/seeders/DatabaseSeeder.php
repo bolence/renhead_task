@@ -26,7 +26,11 @@ class DatabaseSeeder extends Seeder
         Payment::truncate();
         PaymentApproval::truncate();
         User::factory(2)->create();
-        Payment::factory(500)->create();
+        User::factory(2)->create()->each(function ($user) {
+            $payments = Payment::factory(200)->make();
+            $user->payments()->saveMany($payments);
+        });
+
         PaymentApproval::factory(200)->create();
         Schema::enableForeignKeyConstraints();
     }
