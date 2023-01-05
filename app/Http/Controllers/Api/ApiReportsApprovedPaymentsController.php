@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Services\ApprovedPaymentService;
+
+use App\Services\ApprovedPaymentReportService;
 
 class ApiReportsApprovedPaymentsController extends Controller
 {
-    protected ApprovedPaymentService $approverPaymentService;
+    protected ApprovedPaymentReportService $approverPaymentService;
 
-    public function __construct(ApprovedPaymentService $approverPaymentService)
+    public function __construct(ApprovedPaymentReportService $approverPaymentService)
     {
         $this->approverPaymentService = $approverPaymentService;
     }

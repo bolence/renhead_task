@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 
-class ApprovedPaymentService
+class ApprovedPaymentReportService
 {
 
     /**
@@ -33,7 +33,7 @@ class ApprovedPaymentService
 
         $payments_id = $sum_of_approved_payments_query->pluck('payment_id');
 
-        $payments = Payment::findOrFail($payments_id[0]);
+        $payments = Payment::whereIn('id', $payments_id)->get();
 
         foreach (User::approvers() as $approver) {
             $approved_payments_sum[] = [
