@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PaymentRequest extends FormRequest
@@ -13,7 +14,7 @@ class PaymentRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Auth::check();
     }
 
     /**
