@@ -3,6 +3,10 @@
 namespace App\Services;
 
 use App\Models\TravelPayment;
+use App\Services\GlobalService;
+use Exception;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Facades\Auth;
 
 class TravelPaymentService extends GlobalService
 {
@@ -59,6 +63,11 @@ class TravelPaymentService extends GlobalService
     {
         $travel_payment = TravelPayment::findOrFail($id);
 
+        // this can be moved to Laravel policies classes
+        if ($travel_payment->user_id !== $request['user_id']) {
+            throw new AuthenticationException('You are not allowed to update this travel payment');
+        }
+
         try {
             $travel_payment->update($request);
         } catch (\Throwable $th) {
@@ -78,6 +87,10 @@ class TravelPaymentService extends GlobalService
     public function deleteTravelPayment(int $id)
     {
         $travel_payment = TravelPayment::findOrFail($id);
+        // this can be moved to Laravel policies classes
+        if ($travel_payment->user_id !== Auth::id()) {
+            throw new AuthenticationException('You are not allowed to delete this travel payment');
+        }
         $travel_payment_clone = $travel_payment->clone();
 
         try {

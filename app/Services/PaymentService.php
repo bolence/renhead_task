@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\User;
 use App\Models\Payment;
-use Illuminate\Support\Facades\DB;
+use App\Services\GlobalService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\AuthenticationException;
 
 class PaymentService extends GlobalService
 {
@@ -27,7 +28,6 @@ class PaymentService extends GlobalService
      */
     public function savePayment(array $request)
     {
-
         try {
             $payment = Payment::create($request);
         } catch (\Throwable $th) {
